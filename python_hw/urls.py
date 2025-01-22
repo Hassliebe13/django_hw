@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 
+app_name = 'blog'
+
 urlpatterns = [
     path('/', main, name='main'),
     path('posts/', catalog_posts, name='catalog_posts'),
