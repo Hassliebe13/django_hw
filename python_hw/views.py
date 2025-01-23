@@ -14,18 +14,23 @@ CATEGORIES = [
 CATEGORIES_URL = reverse_lazy('blog:catalog_categories')
 TAGS_URL = reverse_lazy('blog:catalog_tags')
 POSTS_URL = reverse_lazy('blog:catalog_posts')
+MAIN_URL = reverse_lazy('blog:main')
 
 def main(request):
     return HttpResponse(f"""
         <h1>Главная страница</h1>
-        <p><a href="{CATEGORIES_URL}">Каталог категорий</a></p>
-        <p><a href="{TAGS_URL}">Каталог тегов</a></p>""")
+            <p><a href="{POSTS_URL}">Каталог постов</a></p>
+        """)
 
-def catalog_categories(request):
+def catalog_categories(reqest):
+    links = []
+    for category in CATEGORIES:
+        url = reverse('blog:category_detail', args=[category['slug']])
+        links.append(f'<p><a href="{url}">{category["name"]}</a></p>')
     return HttpResponse(f"""
-        <h1>Каталог категорий</h1>
-            <p><a></a></p>
-            <p><a></a></p>
+                        <h1>Каталог категорий</h1>
+                        {''.join(links)}
+                        <p><a href="{reverse('blog:catalog_posts')}">К списку постов</a></p>
                         """)
 
 def category_detail(request):
@@ -51,7 +56,7 @@ def tag_detail(request):
 
 def catalog_posts(request):
     return HttpResponse(f"""
-        <h1>Каталог статей</h1>
-            <p><a></a></p>
-            <p><a></a></p>
+        <h1>Каталог постов</h1>
+        <p><a href="{CATEGORIES_URL}">Каталог категорий</a></p>
+        <p><a href="{TAGS_URL}">Каталог тегов</a></p>
                         """)
