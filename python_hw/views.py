@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 
+# Категории
 CATEGORIES = [
         {'slug': 'python', 'name': 'Python'},
         {'slug': 'django', 'name': 'Django'},
@@ -10,30 +11,66 @@ CATEGORIES = [
         {'slug': 'linux', 'name': 'Linux'},
     ]
 
+# Теги
+TAGS = [
+    {'slug': 'framework', 'name': 'Framework'},
+    {'slug': 'database', 'name': 'Database'},
+    {'slug': 'backend', 'name': 'Backend'},
+    {'slug': 'frontend', 'name': 'Frontend'},
+    {'slug': 'devops', 'name': 'DevOps'},
+    {'slug': 'testing', 'name': 'Testing'},
+    {'slug': 'api', 'name': 'API'},
+    {'slug': 'security', 'name': 'Security'}
+]
+
 # URL константы
 CATEGORIES_URL = reverse_lazy('blog:catalog_categories')
 TAGS_URL = reverse_lazy('blog:catalog_tags')
 POSTS_URL = reverse_lazy('blog:catalog_posts')
 MAIN_URL = reverse_lazy('blog:main')
 
+# Главная страница
 def main(request):
     return HttpResponse(f"""
             <h1>Главная страница</h1>
-            <p><a href="{CATEGORIES_URL}">Каталог категорий</a></p>
-            <p><a href="{TAGS_URL}">Каталог тегов</a></p>
+                <p><a href="{POSTS_URL}">Каталог постов</a></p>
         """)
 
+# Каталог категорий
 def catalog_categories(request):
-    return HttpResponse("<h1>Каталог категорий</h1>")
+    links = []
+    for category in CATEGORIES:
+        url = reverse('blog:category_detail', args=[category['slug']])
+        links.append(f'<p><a href="{url}">{category["name"]}</a></p>')
+    return HttpResponse(f"""
+                        <h1>Каталог категорий</h1>
+                        {''.join(links)}
+                        """)
 
-def catalog_posts(request):
-    return HttpResponse("<h1>Каталог постов</h1>")
-
-def category_detail(request, category_slug):
-    return HttpResponse(f"<h1>Категория: {category_slug}</h1>")
-
+# Каталог тегов
 def catalog_tags(request):
     return HttpResponse("<h1>Каталог тегов</h1>")
 
+# Каталог постов
+def catalog_posts(request):
+    return HttpResponse(f"""<h1>Каталог постов</h1>
+                        <p><a href="{CATEGORIES_URL}">Каталог категорий</a></p>
+                        <p><a href="{TAGS_URL}">Каталог тегов</a></p>
+                        """)
+
+# Детальная страница категории
+def category_detail(request, category_slug):
+    category_name = category_slug.replace('-', ' ').title()
+    categories_url = reverse('blog:catalog_categories')
+    
+    return HttpResponse(f"""
+        <h1>Категория: {category_name}</h1>
+        <div class="category-content">
+            <p>Здесь будет отображаться содержимое категории {category_name}</p>
+        </div>
+        <p><a href="{categories_url}">Вернуться к списку категорий</a></p>
+    """)
+
+# Детальная страница тега
 def tag_detail(request, tag_slug):
     return HttpResponse(f"<h1>Тег: {tag_slug}</h1>")
