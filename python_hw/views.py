@@ -49,7 +49,14 @@ def catalog_categories(request):
 
 # Каталог тегов
 def catalog_tags(request):
-    return HttpResponse("<h1>Каталог тегов</h1>")
+    links = []
+    for tags in TAGS:
+        url = reverse('blog:tag_detail', args=[tags['slug']])
+        links.append(f'<p><a href="{url}">{tags["name"]}</a></p>')
+    return HttpResponse(f"""
+                        <h1>Каталог категорий</h1>
+                        {''.join(links)}
+                        """)
 
 # Каталог постов
 def catalog_posts(request):
@@ -64,13 +71,21 @@ def category_detail(request, category_slug):
     categories_url = reverse('blog:catalog_categories')
     
     return HttpResponse(f"""
-        <h1>Категория: {category_name}</h1>
-        <div class="category-content">
-            <p>Здесь будет отображаться содержимое категории {category_name}</p>
-        </div>
-        <p><a href="{categories_url}">Вернуться к списку категорий</a></p>
-    """)
+                        <h1>Категория: {category_name}</h1>
+                        <div class="category-content">
+                            <p>Здесь будет отображаться содержимое категории {category_name}</p>
+                        </div>
+                        <p><a href="{categories_url}">Вернуться к списку категорий</a></p>
+                        """)
 
 # Детальная страница тега
 def tag_detail(request, tag_slug):
-    return HttpResponse(f"<h1>Тег: {tag_slug}</h1>")
+    tag_name = tag_slug.replace('-', ' ').title()
+    tags_url = reverse('blog:catalog_tags')
+    return HttpResponse(f""" 
+                        <h1>Тег: {tag_name}</h1>
+                        <div class="tag-content">
+                            <p>Здесь будет отображаться содержимое тега {tag_name}</p>
+                        </div>
+                        <p><a href="{tags_url}">Вернуться к списку тегов</a></p>
+                        """)
