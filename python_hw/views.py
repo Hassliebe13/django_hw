@@ -54,7 +54,7 @@ def catalog_tags(request):
         url = reverse('blog:tag_detail', args=[tags['slug']])
         links.append(f'<p><a href="{url}">{tags["name"]}</a></p>')
     return HttpResponse(f"""
-                        <h1>Каталог категорий</h1>
+                        <h1>Каталог тегов</h1>
                         {''.join(links)}
                         """)
 
