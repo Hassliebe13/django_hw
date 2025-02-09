@@ -1,27 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-
-# Категории
-CATEGORIES = [
-        {'slug': 'python', 'name': 'Python'},
-        {'slug': 'django', 'name': 'Django'},
-        {'slug': 'postgresql', 'name': 'PostgreSQL'},
-        {'slug': 'docker', 'name': 'Docker'},
-        {'slug': 'linux', 'name': 'Linux'},
-    ]
-
-# Теги
-TAGS = [
-    {'slug': 'framework', 'name': 'Framework'},
-    {'slug': 'database', 'name': 'Database'},
-    {'slug': 'backend', 'name': 'Backend'},
-    {'slug': 'frontend', 'name': 'Frontend'},
-    {'slug': 'devops', 'name': 'DevOps'},
-    {'slug': 'testing', 'name': 'Testing'},
-    {'slug': 'api', 'name': 'API'},
-    {'slug': 'security', 'name': 'Security'}
-]
+from .constant import MENU_ITEMS, CATEGORIES, TAGS, POSTS
 
 # URL константы
 CATEGORIES_URL = reverse_lazy('blog:catalog_categories')
@@ -31,10 +11,11 @@ MAIN_URL = reverse_lazy('blog:main')
 
 # Главная страница
 def main(request):
-    return HttpResponse(f"""
-            <h1>Главная страница</h1>
-                <p><a href="{POSTS_URL}">Каталог постов</a></p>
-        """)
+    context = {
+        'title': 'Главная страница',
+        'menu_items': MENU_ITEMS
+    }
+    return render(request, 'include/main.html', context)
 
 # Каталог категорий
 def catalog_categories(request):

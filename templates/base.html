@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    
+    <style>
+        {% block style %}{% endblock %}
+    </style>
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    <nav>
+        {% include 'include/menu.html' %}
+        {% block nav %}{% endblock %}
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}{% endblock %}
+    </footer>
+
+    <script>
+        {% block scripts %}{% endblock %}
+    </script>
+</body>
+</html>
