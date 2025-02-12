@@ -1,9 +1,9 @@
 # Список пунктов меню   
 MENU_ITEMS = [
-    {"title": "Главная", "url_name": "blog:main"},
-    {"title": "Все посты", "url_name": "blog:posts"},
-    {"title": "Категории", "url_name": "blog:categories"},
-    {"title": "Теги", "url_name": "blog:tags"},
+    {'title': 'Главная', 'url_name': 'blog:main'},
+    {'title': 'Категории', 'url_name': 'blog:catalog_categories'},
+    {'title': 'Теги', 'url_name': 'blog:catalog_tags'},
+    {'title': 'Посты', 'url_name': 'blog:catalog_posts'}
 ]
 
 

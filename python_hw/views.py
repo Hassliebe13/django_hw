@@ -15,7 +15,7 @@ def main(request):
         'title': 'Главная страница',
         'menu_items': MENU_ITEMS
     }
-    return render(request, 'include/main.html', context)
+    return render(request, 'main.html', context)
 
 # Каталог категорий
 def catalog_categories(request):
