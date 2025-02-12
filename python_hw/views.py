@@ -13,38 +13,56 @@ MAIN_URL = reverse_lazy('blog:main')
 def main(request):
     context = {
         'title': 'Главная страница',
-        'menu_items': MENU_ITEMS
+        'menu_items': MENU_ITEMS,
+        'posts': [post for post in POSTS if post['is_published']][:2]
     }
     return render(request, 'main.html', context)
 
+def about(request):
+    context = {
+        'title': 'О проекте',
+        'menu_items': MENU_ITEMS,
+        'user_count': 100,
+        'posts': POSTS
+    }
+    return render(request, 'about.html', context)
+
 # Каталог категорий
 def catalog_categories(request):
-    links = []
-    for category in CATEGORIES:
-        url = reverse('blog:category_detail', args=[category['slug']])
-        links.append(f'<p><a href="{url}">{category["name"]}</a></p>')
-    return HttpResponse(f"""
-                        <h1>Каталог категорий</h1>
-                        {''.join(links)}
-                        """)
+    context = {
+        'title': 'Каталог категорий',
+        'categories': CATEGORIES,
+        'menu_items': MENU_ITEMS
+    }
+    return render(request, 'catalog.html', context)
 
 # Каталог тегов
 def catalog_tags(request):
-    links = []
-    for tags in TAGS:
-        url = reverse('blog:tag_detail', args=[tags['slug']])
-        links.append(f'<p><a href="{url}">{tags["name"]}</a></p>')
-    return HttpResponse(f"""
-                        <h1>Каталог тегов</h1>
-                        {''.join(links)}
-                        """)
+    context = {
+        'title': 'Каталог тегов',
+        'tags': TAGS,
+        'menu_items': MENU_ITEMS
+    }
+    return render(request, 'teg.html', context)
 
 # Каталог постов
 def catalog_posts(request):
-    return HttpResponse(f"""<h1>Каталог постов</h1>
-                        <p><a href="{CATEGORIES_URL}">Каталог категорий</a></p>
-                        <p><a href="{TAGS_URL}">Каталог тегов</a></p>
-                        """)
+    context = {
+        'title': 'Каталог постов',
+        'posts': POSTS,
+        'menu_items': MENU_ITEMS
+    }
+    return render(request, 'posts_list.html', context)
+
+def post_detail(request, post_slug):
+    post = next((post for post in POSTS if post['slug'] == post_slug), None)
+    context = {
+        'title': post['title'],
+        'post': post,
+        'menu_items': MENU_ITEMS
+    }
+    return render(request, 'post_detail.html', context)
+
 
 # Детальная страница категории
 def category_detail(request, category_slug):

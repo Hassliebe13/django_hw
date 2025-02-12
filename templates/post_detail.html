@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <div class="post-content">
+        {{ post.post }}
+    </div>
+    
+    <div class="post-meta">
+        <div class="stats">
+            <span>Просмотры: {{ post.views }}</span>
+            <span>Лайки: {{ post.likes }}</span>
+        </div>
+        
+        <div class="hashtags">
+            {% for tag in post.hashtags %}
+            <span class="tag">#{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="comments-section">
+        <h3>Комментарии ({{ post.comments|length }})</h3>
+        {% for comment in post.comments %}
+        <div class="comment">
+            <strong>{{ comment.username }}</strong>
+            <p>{{ comment.text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

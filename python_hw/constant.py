@@ -3,7 +3,8 @@ MENU_ITEMS = [
     {'title': 'Главная', 'url_name': 'blog:main'},
     {'title': 'Категории', 'url_name': 'blog:catalog_categories'},
     {'title': 'Теги', 'url_name': 'blog:catalog_tags'},
-    {'title': 'Посты', 'url_name': 'blog:catalog_posts'}
+    {'title': 'Посты', 'url_name': 'blog:catalog_posts'},
+    {'title': 'О проекте', 'url_name': 'blog:about'}  # Добавляем новый пункт меню
 ]
 
 

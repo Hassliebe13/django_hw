@@ -1,2 +1,26 @@
 {% extends 'base.html' %}
+
 {% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h1>Добро пожаловать в блог!</h1>
+    <div class="featured-content">
+        <h2>Последние публикации</h2>
+        <div class="posts-grid">
+            {% for post in posts %}
+                {% if post.is_published %}
+                    <div class="post-card">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.post|truncatewords:20 }}</p>
+                        <div class="post-meta">
+                            <span>👁 {{ post.views }}</span>
+                            <span>❤️ {{ post.likes }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
